@@ -1,0 +1,27 @@
+[
+    {
+      "name": "Apple",
+      "color": "Red",
+      "flavor": "Sweet",
+      "price": 1.5
+    },
+    {
+      "name": "Banana",
+      "color": "Yellow",
+      "flavor": "Sweet",
+      "price": 0.75
+    },
+    {
+      "name": "Strawberry",
+      "color": "Red",
+      "flavor": "Sweet",
+      "price": 2.0
+    },
+    {
+      "name": "Kiwi",
+      "color": "Green",
+      "flavor": "Tart-sweet",
+      "price": 1.8
+    }
+  ]
+  

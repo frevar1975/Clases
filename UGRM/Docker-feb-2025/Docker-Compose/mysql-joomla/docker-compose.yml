@@ -1,0 +1,29 @@
+version: '3'
+services:
+ 
+ joomla_db:
+  container_name: mysql-joomla
+  ports:
+   - "3306:3306"
+  image: mysql:5.6
+  env_file: mysql.env
+  volumes:
+   - $PWD/data:/var/lib/mysql
+  networks:
+   - net
+
+ joomla:
+  container_name: joomla
+  ports:
+   - "8080:8080"
+  image: joomla
+  env_file: joomla.env
+  depends_on: 
+   - joomla_db
+  volumes:
+   - $PWD/joomla-html:/var/www/html
+  networks:
+   - net
+
+networks:
+ net:

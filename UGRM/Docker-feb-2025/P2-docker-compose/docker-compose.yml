@@ -1,0 +1,50 @@
+version: '3'
+
+services:
+
+  mongo:
+    container_name: simplest-app-mongo
+    image: mongo:6.0 #service from image stored in docker hub
+    networks:
+      - backend-network
+    # Volume for persisting data. Normally, if you don't use a volume,
+    # data will be lost when the container is removed.
+    volumes:
+      - 'simplest-app-mongo-volume:/data/db'
+
+  backend:
+    container_name: simplest-app-backend
+    build:  #image built from Dockerfile in the backend directory
+      context: backend
+    ports:
+      - '4000:4000'
+    networks:
+      - backend-network
+    depends_on:
+      - mongo
+
+  frontend:
+    container_name: simplest-app-frontend
+    ports: 
+      - '80:3000'
+    # the app will be listening inside the container at localhost:3000
+    # this localhost is the container's internal localhost, not your machine's localhost
+    # port 80 in the host machine (your pc) will be mapped to port 3000 in the container
+    # so you (host) can access the frontend in the browser using localhost:80
+    build:
+      context: frontend
+    networks:
+      - backend-network
+      - frontend-network
+    depends_on:
+      - backend
+    volumes: #bind mount for the frontend, 
+    #changes in index.html will be reflected in the container without rebuilding the image
+      - ./frontend/index.html:/opt/app/index.html
+
+volumes:
+  simplest-app-mongo-volume: null
+
+networks:
+  backend-network: null #network for backend and mongo
+  frontend-network: null #network for frontend

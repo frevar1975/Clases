@@ -1,0 +1,31 @@
+version: '3'
+services:
+ 
+ postgres:
+  container_name: postgres-drupal
+  ports:
+   - "5432:5432"
+  image: postgres
+  environment:
+   - "POSTGRES_PASSWORD=root"
+  volumes:
+   - postgres-data:/var/lib/postgresql/data
+  networks:
+   - net
+
+ drupal:
+  container_name: drupal
+  ports:
+   - "80:80"
+  image: drupal
+  volumes:
+   - drupal-data:/var/www/html
+  networks:
+   - net
+
+networks:
+ net:
+
+volumes:
+ postgres-data:
+ drupal-data:
